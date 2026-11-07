@@ -1,1 +1,960 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Qur’an Content Creator Academy — Master Praktikum</title>
+<!-- Font Latin: Crimson Pro (angka tinggi sejajar kapital / lining figures). -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet"/>
 
+<style>
+:root {
+    --dark: #092f2a;
+    --emerald: #105c4d;
+    --gold: #c9a34f;
+    --cream: #faf8f2;
+    --ink: #19332e;
+    --muted: #65756f;
+    --line: #dfdfd5
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    /* Latin: Crimson Pro — angka (lining figures) setinggi kapital */
+    font: 15px/1.65 'Crimson Pro', Georgia, 'Times New Roman', serif;
+    font-feature-settings: 'lnum' 1, 'onum' 0;
+    font-variant-numeric: lining-nums
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit
+}
+
+button {
+    cursor: pointer
+}
+
+header {
+    background: linear-gradient(120deg, #062b27, #146451);
+    color: white;
+    padding: 32px max(22px, calc((100vw - 1180px)/2));
+    border-bottom: 5px solid var(--gold)
+}
+
+header .eyebrow {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #f2dca1;
+    font: 12px Arial, sans-serif
+}
+
+h1 {
+    font-size: clamp(27px, 4vw, 45px);
+    margin: 8px 0
+}
+
+/* Paragraf di header diperlebar */
+header p {
+    max-width: 1080px;
+    color: #e0eee9;
+    margin: 0
+}
+
+.wrap {
+    max-width: 1180px;
+    margin: auto;
+    padding: 25px 20px 70px
+}
+
+.nav {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 22px
+}
+
+.nav a {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 9px 13px;
+    border-radius: 9px;
+    text-decoration: none;
+    color: var(--emerald);
+    font: 600 13px Arial, sans-serif
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 6px 24px #173c3210;
+    margin-bottom: 20px
+}
+
+h2 {
+    font-size: 23px;
+    margin: 0 0 13px;
+    color: var(--emerald)
+}
+
+h3 {
+    font-size: 18px;
+    color: var(--emerald);
+    margin: 12px 0
+}
+
+.small {
+    font: 13px/1.6 Arial, sans-serif;
+    color: var(--muted)
+}
+
+label {
+    display: block;
+    font: 700 13px Arial, sans-serif;
+    margin: 13px 0 5px
+}
+
+/* Isi form diperbesar tanpa menambah jarak baris */
+input,
+textarea,
+select {
+    width: 100%;
+    border: 1px solid #ccd6cf;
+    border-radius: 9px;
+    padding: 11px;
+    background: #fff;
+    color: #18362e;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+textarea {
+    min-height: 82px;
+    resize: vertical
+}
+
+/* === Textarea yang tingginya mengikuti panjang isi/narasi === */
+textarea.auto-grow {
+    overflow: hidden;
+    resize: none;
+    min-height: 44px;
+    transition: height .12s ease;
+}
+
+/* Terjemahan: ruang lebih lega karena teks terjemahan panjang */
+#translation.auto-grow {
+    min-height: 132px;
+}
+
+/* Pesan utama untuk audiens: tinggi mengikuti panjang pesan */
+#message.auto-grow {
+    min-height: 110px;
+}
+
+/* Teks layar (caption) pada kartu skenario */
+.scene textarea.arabic-text {
+    min-height: 64px;
+}
+
+/* Narasi pada kartu skenario */
+.scene textarea.narration {
+    min-height: 96px;
+}
+
+/* Teks Arab standar (Ayat di form & preview) */
+.arabic {
+    font-family: 'Scheherazade New', 'Amiri', 'Noto Naskh Arabic', serif;
+    font-size: 20px;
+    line-height: 1.85;
+    text-align: right;
+    direction: rtl;
+    min-height: 115px
+}
+
+/* Font Arab untuk input teks di dalam grid skenario */
+.arabic-text {
+    font-family: 'Scheherazade New', 'Amiri', 'Noto Naskh Arabic', serif;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.btn {
+    background: var(--emerald);
+    border: 1px solid var(--emerald);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 9px;
+    font: 700 13px Arial, sans-serif;
+    margin: 5px 5px 5px 0
+}
+
+.btn.alt {
+    background: #fff;
+    color: var(--emerald)
+}
+
+.btn.gold {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #172c25
+}
+
+.notice {
+    border-left: 4px solid var(--gold);
+    background: #fbf6e9;
+    padding: 12px 15px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px
+}
+
+.step {
+    border: 1px solid #dce5de;
+    border-radius: 11px;
+    padding: 13px;
+    background: #fcfdfa
+}
+
+.step b {
+    color: var(--emerald)
+}
+
+/* Memperbesar font grid internal (Kritis, Kredibel, Kreatif, dll) */
+.step,
+.notice,
+.card p:not(.small),
+.scene .body {
+    font-size: 16.5px;
+    line-height: 1.5;
+}
+
+.step p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.story {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px
+}
+
+.scene {
+    border: 1px solid #d7dfd9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff
+}
+
+.scene .visual {
+    background: linear-gradient(140deg, #0a3832, #176855);
+    color: #e5ca80;
+    min-height: 125px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 13px;
+    text-align: center;
+    font-size: 26px
+}
+
+.scene .body {
+    padding: 13px
+}
+
+.scene .body p {
+    margin: 5px 0
+}
+
+.pill {
+    display: inline-block;
+    border-radius: 99px;
+    background: #e9f1ed;
+    padding: 3px 9px;
+    font: 700 11px Arial, sans-serif;
+    color: #175848
+}
+
+.screen {
+    aspect-ratio: 9/16;
+    max-width: 310px;
+    margin: 10px auto;
+    background: radial-gradient(circle at 50% 25%, #24765d, #052e2a 70%);
+    border: 9px solid #172b27;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 25px;
+    position: relative;
+    overflow: hidden
+}
+
+.screen:before {
+    content: '✦';
+    position: absolute;
+    font-size: 190px;
+    opacity: .06;
+    top: 0
+}
+
+.screen .inner {
+    position: relative;
+    z-index: 1
+}
+
+.screen .arabic {
+    font-size: 20px;
+    min-height: auto;
+    text-align: center;
+    color: #f4db98
+}
+
+.screen .caption {
+    font-size: 17px
+}
+
+.screen .time {
+    font: 12px Arial, sans-serif;
+    color: #e7c77c
+}
+
+.rubric {
+    width: 100%;
+    border-collapse: collapse
+}
+
+.rubric th,
+.rubric td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px;
+    text-align: left
+}
+
+.rubric input {
+    max-width: 80px
+}
+
+.rubric th {
+    background: #eaf2ed
+}
+
+.total {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--emerald)
+}
+
+footer {
+    background: #092f2a;
+    color: #cbded7;
+    text-align: center;
+    padding: 22px;
+    font: 13px Arial, sans-serif
+}
+
+.hidden {
+    display: none
+}
+
+.status {
+    font: 700 13px Arial, sans-serif;
+    color: var(--emerald)
+}
+
+@media(max-width:800px) {
+
+    .grid,
+    .steps,
+    .story {
+        grid-template-columns: 1fr
+    }
+}
+
+@media print {
+    header {
+        padding: 15px;
+        background: white;
+        color: black
+    }
+
+    .nav,
+    .no-print,
+    .btn {
+        display: none !important
+    }
+
+    .card {
+        break-inside: avoid;
+        box-shadow: none
+    }
+
+    .wrap {
+        padding: 10px
+    }
+
+    .screen {
+        max-width: 220px
+    }
+}
+
+/* === Video YouTube: Lebar penuh, bebas scroll === */
+.video-preview {
+    max-width: 100%;
+    width: 100%;
+    margin: 15px 0;
+    background: #fff; 
+    border: 1px solid var(--line); 
+    border-radius: 12px; 
+    overflow: hidden;
+    aspect-ratio: 9/16;
+    display: flex;
+    align-items: center
+}
+
+.video-preview video,
+.video-preview iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border: 0
+}
+
+.storyboard-preview {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    background: #f8faf8;
+    margin: 15px 0
+}
+
+/* Font pratinjau disamakan */
+.storyboard-preview .arabic {
+    font-size: 20px;
+    text-align: center;
+    min-height: 0
+}
+
+.storyboard-preview p {
+    font-family: 'Scheherazade New', 'Amiri', 'Noto Naskh Arabic', 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.storyboard-preview strong {
+    display: block;
+    color: var(--emerald);
+    font-size: 19px;
+    margin: 7px
+}
+
+.storyboard-preview .time {
+    color: #80632d;
+    font-size: 12px
+}
+
+/* === Accordion hasil skenario (dipicu tombol "Susun Skenario dari Ayat") === */
+.accordion-content {
+    overflow: hidden;
+    max-height: 5000px;
+    opacity: 1;
+    transition: max-height .45s ease, opacity .3s ease, margin .3s ease;
+    margin-top: 10px
+}
+
+.accordion-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0
+}
+
+.btn-chevron {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 11px;
+    transition: transform .35s ease
+}
+
+.btn-chevron.up {
+    transform: rotate(180deg)
+}
+
+@media print {
+    .accordion-content.collapsed {
+        max-height: none;
+        opacity: 1
+    }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">UIN Maulana Malik Ibrahim Malang (UIN MALIKI) · Prodi Ilmu Al-Qur’an dan Tafsir · Praktikum 2026</div>
+<h1>Qur’an Content Creator Academy</h1>
+<p>Master Praktikum Mahasiswa Ilmu Al-Qur’an dan tafsir — Dari ayat Al-Qur’an dan pemahaman ayat Al-Qur’an menuju konten digital yang <strong>kritis, kredibel, dan
+            kreatif</strong>.</p>
+</header>
+<main class="wrap">
+<nav class="nav no-print">
+<a href="#panduan">Panduan</a>
+<a href="#bahan">Bahan Ayat</a>
+<a href="#verifikasi">Verifikasi</a>
+<a href="#produksi">Storyboard</a>
+<a href="#preview">Pratinjau</a>
+<a href="#rubrik">Rubrik</a>
+<a href="#laporan">Laporan</a>
+</nav>
+<section class="card" id="panduan">
+<h2>01 · Petunjuk Praktikum</h2>
+<div class="steps">
+<div class="step">
+<b>1. Kritis</b>
+<p>Masukkan ayat Al-Qur’an, periksa mushaf, terjemahan, konteks, dan tafsir otoritatif. Jangan menerima keluaran AI sebagai penafsiran yang sudah terverifikasi.</p>
+</div>
+<div class="step">
+<b>2. Kredibel</b>
+<p>Bandingkan penafsiran, catat rujukan kitab tafsir, dan simpulkan pesan secara proporsional. Cantumkan batasan interpretasi dan etika
+                publikasi.</p>
+</div>
+<div class="step">
+<b>3. Kreatif</b>
+<p>Susun enam adegan, lihat pratinjau, isi rubrik, lalu cetak atau simpan laporan praktikum.</p>
+</div>
+</div>
+<div class="notice">Master beroperasi <strong>offline</strong> untuk pengisian bahan dan laporan. Contoh awal menggunakan QS. al-Nisā’ [4]: 29. Video contoh berupa <strong>YouTube</strong> yang disematkan; pemutarannya memerlukan koneksi internet. Enam adegan merupakan adaptasi tematik, <strong>bukan transkrip audio yang telah diverifikasi</strong>.</div>
+</section>
+<div class="grid">
+<section class="card" id="bahan">
+<h2>02 · Bahan Ayat Al-Qur’an</h2>
+<label>Nama mahasiswa / kelompok</label>
+<input id="student" placeholder="Nama dan NIM / Kelompok"/>
+<label>Judul atau tema konten</label>
+<input id="topic" value="‘An Tarāḍin: Saling Rela dalam Perdagangan"/>
+<label>Teks Arab ayat Al-Qur’an (harakat penuh)</label>
+<textarea class="arabic" id="arabic">يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُمْ بَيْنَكُمْ بِالْبَاطِلِ إِلَّا أَنْ تَكُونَ تِجَارَةً عَنْ تَرَاضٍ مِنْكُمْ وَلَا تَقْتُلُوا أَنْفُسَكُمْ إِنَّ اللَّهَ كَانَ بِكُمْ رَحِيمًا</textarea>
+<label>Terjemahan bahasa Indonesia</label>
+<textarea class="auto-grow" id="translation">Wahai orang-orang yang beriman! Janganlah kamu saling memakan harta sesamamu dengan jalan yang batil, kecuali dalam perdagangan yang berlaku atas dasar suka sama suka di antara kamu. Dan janganlah kamu membunuh dirimu. Sungguh, Allah Maha Penyayang kepadamu.</textarea>
+<label>Surah dan nomor ayat</label>
+<input id="source" value="Al-Qur’an, QS. al-Nisā’ [4]: 29"/>
+<label>Pesan utama untuk audiens</label>
+<textarea class="auto-grow" id="message">Perdagangan harus dilakukan dengan cara yang benar, atas dasar kerelaan para pihak, tanpa penipuan, pemaksaan, atau pengambilan harta secara batil.</textarea>
+<button class="btn alt" onclick="loadExample()">Isi Contoh al-Nisā’ 29</button>
+<button class="btn alt" onclick="clearMaterials()">Kosongkan Bahan</button>
+</section>
+<section class="card" id="verifikasi">
+<h2>03 · Lembar Verifikasi Ilmiah</h2>
+<label>Identifikasi surah, ayat, dan rujukan mushaf</label>
+<textarea id="takhrij" placeholder="Tuliskan nama surah, nomor ayat, dan sumber mushaf yang diperiksa..."></textarea>
+<label>Kajian tafsir dan perbandingan pendapat mufasir</label>
+<textarea id="sanad" placeholder="Ringkas penafsiran dari kitab tafsir yang jelas identitasnya; bedakan tafsir dan opini..."></textarea>
+<label>Pemeriksaan redaksi, harakat, dan terjemahan ayat</label>
+<textarea id="matan" placeholder="Periksa ketepatan lafaz ayat, harakat, dan terjemahan terhadap mushaf..."></textarea>
+<label>Konteks ayat, munāsabah, dan batasan pemaknaan</label>
+<textarea id="context" placeholder="Uraikan konteks pemahaman dan hindari generalisasi..."></textarea>
+<label>URL / identitas sumber yang diperiksa</label>
+<input id="url" placeholder="URL sumber atau bibliografi lengkap"/>
+<label>
+<input id="verified" style="width:auto" type="checkbox"/> Saya telah memeriksa teks dan rujukan
+            secara mandiri
+        </label>
+<p class="small">Centang merupakan pernyataan mahasiswa, bukan validasi otomatis oleh sistem.</p>
+</section>
+</div>
+<!-- === 04 · GENERATOR SKENARIO (accordion dipicu tombol) === -->
+<section class="card" id="produksi">
+<h2>04 · Generator Skenario Video Pendek</h2>
+<p class="small">Enam adegan contoh QS. al-Nisā’ [4]: 29 disusun secara tematik untuk mendampingi video contoh YouTube. Bukan transkrip persis audio. Untuk bahan pilihan mahasiswa, tersedia skenario umum yang dapat diedit.</p>
+<!-- Tombol toggle: buka + susun / tutup -->
+<button aria-controls="produksi-content" aria-expanded="false" class="btn gold" id="generateBtn" onclick="toggleScenarios()">
+<span id="generateBtnLabel">Susun Skenario dari Ayat</span><span class="btn-chevron" id="generateBtnChevron">▾</span>
+</button>
+<button class="btn alt" onclick="saveDraft()">Simpan Draf di Browser</button>
+<button class="btn alt" onclick="restoreDraft()">Muat Draf</button>
+<!-- Area hasil yang bisa di-collapse -->
+<div aria-hidden="true" class="accordion-content collapsed" id="produksi-content">
+<p aria-live="polite" class="status" id="saveStatus"></p>
+<div class="story" id="scenes">
+<p class="small">Klik "Susun Skenario dari Ayat" untuk menampilkan enam adegan.</p>
+</div>
+</div>
+</section>
+<!-- === /04 === -->
+<div class="grid">
+<section class="card" id="preview">
+<h2>05 · Pratinjau Video dan Storyboard 9:16</h2>
+<div class="video-preview">
+<!-- Embed YouTube -->
+<iframe id="hadithVideo" src="https://www.youtube.com/embed/m4dQuM6xiGo" title="Video contoh praktikum tafsir (YouTube)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+<p class="small">
+    <strong>Video contoh YouTube (tautan narasumber).</strong> Klik tombol putar untuk menonton. Konten ini disematkan dari YouTube; koneksi internet diperlukan.
+    <br>Jika video tidak tampil, silakan <a href="https://www.youtube.com/watch?v=m4dQuM6xiGo" target="_blank" rel="noopener" style="color: var(--emerald); font-weight: bold;">tonton langsung di YouTube</a>.
+</p>
+<h3>Pratinjau teks storyboard mahasiswa</h3>
+<div class="storyboard-preview">
+<div class="time" id="frameTime">STORYBOARD · 00–10 DETIK</div>
+<strong id="frameTitle">Adegan-1</strong>
+<div class="arabic" id="frameArabic">إِلَّا أَنْ تَكُونَ تِجَارَةً عَنْ تَرَاضٍ مِنْكُمْ</div>
+<p id="frameCaption">Perdagangan atas dasar saling rela.</p>
+</div>
+<div style="text-align:center">
+<button class="btn alt" onclick="prevFrame()">◀ Sebelumnya</button>
+<button class="btn" onclick="nextFrame()">Berikutnya ▶</button>
+<button class="btn alt" id="playButton" onclick="togglePlay()">Putar Storyboard</button>
+</div>
+<p class="small">Pratinjau storyboard menggunakan teks ayat yang diisi mahasiswa; video YouTube di atas
+            merupakan contoh tetap.</p>
+</section>
+<section class="card" id="rubrik">
+<h2>06 · Rubrik Penilaian Analitik</h2>
+<p class="small">Masukkan skor 0–100 pada setiap kriteria. Nilai akhir dihitung otomatis dengan bobot.
+        </p>
+<table class="rubric">
+<thead>
+<tr>
+<th>Kriteria</th>
+<th>Bobot</th>
+<th>Skor</th>
+</tr>
+</thead>
+<tbody id="rubricRows"></tbody>
+</table>
+<p>Nilai akhir: <span class="total" id="total">0,0</span> / 100</p>
+<label>Catatan penilai / tindak lanjut</label>
+<textarea id="feedback" placeholder="Kekuatan, kekurangan, dan perbaikan..."></textarea>
+</section>
+</div>
+<section class="card" id="laporan">
+<h2>07 · Laporan Hasil Praktikum</h2>
+<p>Setelah mengisi bahan, verifikasi, storyboard, dan rubrik, gunakan tombol berikut untuk menghasilkan
+        laporan yang dapat disimpan sebagai PDF melalui fitur cetak browser atau diunduh sebagai teks.</p>
+<button class="btn" onclick="makeReport()">Perbarui Laporan</button>
+<button class="btn alt" onclick="window.print()">Cetak / Simpan PDF</button>
+<button class="btn alt" onclick="downloadReport()">Unduh Laporan TXT</button>
+<div class="notice" id="report">Laporan belum dibuat.</div>
+</section>
+</main>
+<footer>Master Praktikum · Qur’an Content Creator Academy · UIN Maulana Malik Ibrahim Malang (UIN MALIKI) · Prodi Ilmu Al-Qur’an dan Tafsir · 2026<br/>Materi dan penilaian
+    wajib ditinjau oleh dosen/pembimbing sebelum publikasi.</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+// ID internal takhrij/sanad/matan dipertahankan agar penyimpanan draf lama tetap kompatibel.
+const ids = ['student', 'topic', 'arabic', 'translation', 'source', 'message', 'takhrij', 'sanad', 'matan', 'context', 'url', 'feedback'];
+const weights = [
+    ['Ketepatan ayat, terjemahan, dan sumber tafsir', 35], 
+    ['Ketepatan penafsiran dan kontekstualisasi', 25], 
+    ['Kreativitas narasi dan visual', 20], 
+    ['Kualitas teknis produksi', 10], 
+    ['Etika digital dan transparansi AI', 10]
+];
+let frames = [], frame = 0, timer = null;
+
+/* ===== Auto-grow: tinggi textarea mengikuti panjang narasi ===== */
+function autoGrow(el) {
+    if (!el || !el.classList.contains('auto-grow')) return;
+    const cs = getComputedStyle(el);
+    const border = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+    el.style.height = 'auto';
+    el.style.height = Math.ceil(el.scrollHeight + border) + 'px';
+}
+
+function autoGrowAll(root) {
+    (root || document).querySelectorAll('textarea.auto-grow').forEach(autoGrow);
+}
+
+document.addEventListener('input', e => {
+    if (e.target instanceof HTMLTextAreaElement && e.target.classList.contains('auto-grow')) {
+        autoGrow(e.target);
+    }
+});
+
+window.addEventListener('resize', () => autoGrowAll());
+
+/* ===== Accordion hasil skenario (dipicu tombol) ===== */
+function setScenariosOpen(open) {
+    const content = $('produksi-content');
+    const btn = $('generateBtn');
+    const label = $('generateBtnLabel');
+    const chevron = $('generateBtnChevron');
+    if (open) {
+        content.classList.remove('collapsed');
+        content.setAttribute('aria-hidden', 'false');
+        btn.setAttribute('aria-expanded', 'true');
+        label.textContent = 'Sembunyikan Skenario';
+        chevron.classList.add('up');
+        autoGrowAll(content);
+    } else {
+        content.classList.add('collapsed');
+        content.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+        label.textContent = 'Susun Skenario dari Ayat';
+        chevron.classList.remove('up');
+    }
+}
+
+/* Tombol utama = toggle sekaligus generator */
+function toggleScenarios() {
+    const isCollapsed = $('produksi-content').classList.contains('collapsed');
+    if (isCollapsed) {
+        if (generate()) {
+            setScenariosOpen(true);
+        }
+    } else {
+        setScenariosOpen(false);
+    }
+}
+
+function escapeHTML(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function loadExample() {
+    const v = { 
+        topic: "‘An Tarāḍin: Saling Rela dalam Perdagangan", 
+        arabic: 'يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَأْكُلُوا أَمْوَالَكُمْ بَيْنَكُمْ بِالْبَاطِلِ إِلَّا أَنْ تَكُونَ تِجَارَةً عَنْ تَرَاضٍ مِنْكُمْ وَلَا تَقْتُلُوا أَنْفُسَكُمْ إِنَّ اللَّهَ كَانَ بِكُمْ رَحِيمًا', 
+        translation: 'Wahai orang-orang yang beriman! Janganlah kamu saling memakan harta sesamamu dengan jalan yang batil, kecuali dalam perdagangan yang berlaku atas dasar suka sama suka di antara kamu. Dan janganlah kamu membunuh dirimu. Sungguh, Allah Maha Penyayang kepadamu.', 
+        source: "Al-Qur’an, QS. al-Nisā’ [4]: 29", 
+        message: 'Perdagangan harus dilakukan dengan cara yang benar, atas dasar kerelaan para pihak, tanpa penipuan, pemaksaan, atau pengambilan harta secara batil.' 
+    };
+    Object.entries(v).forEach(([k, val]) => $(k).value = val);
+    $('verified').checked = false;
+    frames = []; renderScenes(); showFrame(); setScenariosOpen(false);
+    autoGrowAll();
+}
+
+function clearMaterials() {
+    if (!confirm('Kosongkan bahan ayat dan catatan verifikasi?')) return;
+    ['topic', 'arabic', 'translation', 'source', 'message', 'takhrij', 'sanad', 'matan', 'context', 'url'].forEach(k => $(k).value = '');
+    $('verified').checked = false;
+    frames = [];
+    renderScenes();
+    showFrame();
+    setScenariosOpen(false);
+    autoGrowAll();
+}
+
+// Skenario adaptasi tematik berdasarkan dokumen storyboard video contoh.
+// Narasi di bawah ini diambil dari naskah narasi studio (voice-over) dan dipecah ke dalam enam adegan.
+const TARADIN_SCENES = [
+    {
+        title:'Jebakan Harta Batil',
+        visual:'Adegan-1',
+        caption:'Transaksi wajar atau jebakan?',
+        narration:'Surah An-Nisa ayat 29, melarang keras perolehan harta secara batil. Kunci kehalalannya ada pada satu aturan prinsip ataradi. Banyak yang mengira asalkan uang dibayar dan barang diterima, jual beli otomatis sah secara agama.'
+    },
+    {
+        title:'Penipuan Terselubung',
+        visual:'Adegan-2',
+        caption:'HP bekas, mesin rusak disembunyikan.',
+        narration:'Coba bayangkan membeli ponsel bekas yang luar yang mulus. Padahal baterainya bocor parah tanpa sepengetahuan Anda. Menyembunyikan cacat seperti ini mengubah jalur transaksi menjadi beracun. Ini adalah contoh mutlak perolehan harta secara batil, yaitu merampas hak orang lain melalui manipulasi.'
+    },
+    {
+        title:'Kerelaan yang Semu',
+        visual:'Adegan-3',
+        caption:'Tampak sah, padahal cacat.',
+        narration:'Islam memberikan solusi perlindungan lewat attarodi, yaitu asas suka sama suka dari kedua belah pihak. Tapi indikator kerelaan ini akan gagal menyala jika ada fakta yang sengaja ditutupi. Rasa rela pembeli tadi sebenarnya hanyalah akibat dari ketidaktahuan atau rodi yang sah menuntut transparansi total.'
+    },
+    {
+        title:'Asas Taradin',
+        visual:'Adegan-4',
+        caption:'عَنْ تَرَاضٍ مِنْكُمْ (Kerelaan sejati butuh kejujuran)',
+        narration:'Indikator persetujuan baru akan terkunci sempurna jika kedua belah pihak saling tahu kondisi asli barang dan uang tanpa celah penipuan. Al-Qur\'an kemudian menyambung aturan ini dengan larangan membinasakan diri sendiri. Karena merampas harta saudara dengan curang sama dengan meracuni urat nadi perekonomian umat. Kezaliman finansial sekecil apapun akan menghancurkan rasa percaya dan akhirnya membinasakan pelakunya sendiri. Jadi pada kasus ponsel bekas tadi, transaksi tersebut baru sah dan menyelamatkan keduanya jika penjual membeberkan cacatnya dan pembeli tetap sepakat membayar.'
+    },
+    {
+        title:'Berubah Menjadi Batil',
+        visual:'Adegan-5',
+        caption:'Rida cacat = Harta Batil',
+        narration:'Syarat sah jual beli dalam Islam adalah antarin minkum atau suka sama suka. Tapi awas, sekadar salaman dan sepakat harga belum tentu bikin transaksinya halal. Bayangkan kamu beli ponsel bekas yang fisiknya tampak mulus tanpa tahu kalau mesin di dalamnya pernah hancur terendam air. Di sinilah makna asli Rido bekerja. Keran utuh hanya terbentuk lewat transparansi total. Penjual wajib membuka seluruh detail kondisi barang agar pembeli sepakat dalam keadaan sadar. Lalu bagaimana jika uang terlanjur diserahkan tapi ternyata ada cacat yang disembunyikan. Saat pembeli merasa dirugikan, sirkuit kerelaan ini langsung terputus seketika. Tenang, syariat melindungi pembeli dengan hak pilih secara mutlak. Begitu kebohongan terungkap, transaksi bisa diputar balik untuk memulihkan keadilan. Meski sudah ada ijab kabul, praktik penipuan spesifikasi langsung merusak keapsahan akad. Pemindahan harta baru diakui sah jika kedua belah pihak mendapat informasi yang setara. Jadi pada kasus ponsel bekas tadi, pembeli berhak membatalkan pembelian secara sepihak memastikan prinsip keadilan dan kerelaan mutlak tetap tegak.'
+    },
+    {
+        title:'Konsekuensi Syariat',
+        visual:'Adegan-6',
+        caption:'Transaksi gugur, uang kembali utuh.',
+        narration:'Mengapa ayat larangan merampas harta langsung disambung dengan walaulu anfusakum atau larangan membunuh diri? Ternyata ini bukan sekadar soal bunuh diri fisik, melainkan peringatan keras tentang kezaliman ekonomi. Bayangkan seorang rentenir yang terus memeras pedagang kecil di pasar demi menumpuk kekayaannya. Ulama menafsirkan frasa tersebut bukan sekadar larangan melukai raga, tapi juga larangan mematikan urat nadi ekonomi sesama. Tapi logikanya jika yang dimiskinkan adalah orang lain, mengapa ayatnya menyebut membinasakan dirimu sendiri? Imam Ass\'di menjelaskan, umat beriman itu ibarat satu bangunan tubuh yang saling menopang. Memeras harta saudara sendiri sama dengan merobohkan tiang penyangga masyarakat tempat si pelaku ikut bernaung. Inilah mengapa ayat tersebut ditutup dengan penegas bahwa Allah Maha Penyayang. Larangan berbuat batil diturunkan untuk mencegah manusia saling menghancurkan. Kembali ke nasib sang rentenir tadi. Ia pada akhirnya pasti ikut hancur karena saat warga kehilangan daya beli, pasarnya ikut mati. Syariat Allah sejatinya adalah tameng untuk menyelamatkan kita dari diri kita sendiri.'
+    }
+];
+
+function generate() {
+    const topic = $('topic').value.trim(), ar = $('arabic').value.trim(), tr = $('translation').value.trim(), msg = $('message').value.trim();
+    if (!ar || !tr || !msg) { alert('Isi teks Arab, terjemahan, dan pesan utama terlebih dahulu.'); return false; }
+    const isTaradin = ar.includes('عَنْ تَرَاضٍ مِنْكُمْ') && ar.includes('بِالْبَاطِلِ');
+    if (isTaradin) frames = TARADIN_SCENES.map(f=>({...f}));
+    else {
+        const titles=['Pembuka','Persoalan','Teks Sumber','Makna dan Konteks','Penerapan','Penutup dan Rujukan'];
+        const visuals=['Adegan-1','Adegan-2','Adegan-3','Adegan-4','Adegan-5','Adegan-6'];
+        const captions=[topic||'Tema pilihan','Mengapa tema ini penting?',tr,msg,'Contoh nyata yang relevan',$('source').value.trim()||'Sumber belum diisi'];
+        const narrations=[`Mari memahami ${topic||'tema pilihan'} berdasarkan sumber yang dapat diperiksa.`, 'Apa persoalan yang hendak dijawab oleh teks ini?', `Bacaan dan terjemahannya: ${tr}`, `Pesan utamanya: ${msg}`, 'Berikan contoh yang sesuai dengan konteks dan batasan makna sumber.', `Periksa kembali rujukan: ${$('source').value.trim()||'belum diisi'}.`];
+        frames=titles.map((title,i)=>({title,visual:visuals[i],caption:captions[i],narration:narrations[i]}));
+    }
+    frame=0; renderScenes(); showFrame();
+    $('saveStatus').textContent=isTaradin?'Enam adegan merupakan adaptasi tematik ayat, bukan transkrip persis video. Cocokkan dengan audio dan visual video contoh YouTube.':'Enam adegan disusun dari bahan pilihan. Periksa dan sunting sebelum publikasi.';
+    return true;
+}
+
+function renderScenes() {
+    if (!frames.length) {
+        $('scenes').innerHTML = '<p class="small">Belum ada skenario. Isi bahan dan klik generator.</p>';
+        return;
+    }
+    $('scenes').innerHTML = frames.map((f, i) => `<div class="scene"><div class="visual"><span>${escapeHTML(f.visual)}</span></div><div class="body"><span class="pill">${i * 10}–${(i + 1) * 10} detik</span><label>Judul</label><input aria-label="Judul adegan ${i + 1}" value="${escapeHTML(f.title)}" oninput="editFrame(${i},'title',this.value)"><label>Teks layar</label><textarea class="arabic-text auto-grow" dir="auto" aria-label="Teks layar adegan ${i + 1}" oninput="editFrame(${i},'caption',this.value)">${escapeHTML(f.caption)}</textarea><label>Narasi</label><textarea class="auto-grow narration" aria-label="Narasi adegan ${i + 1}" oninput="editFrame(${i},'narration',this.value)">${escapeHTML(f.narration)}</textarea></div></div>`).join('');
+    autoGrowAll($('scenes'));
+}
+
+function editFrame(i, k, v) {
+    frames[i][k] = v;
+    if (i === frame) showFrame();
+}
+
+function showFrame() {
+    const f = frames[frame];
+    const ar = $('arabic').value || '';
+    const isTaradin = ar.includes('عَنْ تَرَاضٍ مِنْكُمْ') && ar.includes('بِالْبَاطِلِ');
+    const arabicFrame = isTaradin ? 3 : 2; // Ayat di adegan ke-4 (indeks 3) untuk Taradin, atau ke-3 (indeks 2) untuk umum
+    $('frameTime').textContent = f ? `ADEGAN ${frame + 1} · ${frame * 10}–${(frame + 1) * 10} DETIK (ESTIMASI)` : 'STORYBOARD · 00–10 DETIK';
+    $('frameTitle').textContent = f ? f.title : ($('topic').value || 'Pratinjau Storyboard');
+    $('frameArabic').textContent = (f && frame === arabicFrame) || !f ? ar : '';
+    $('frameArabic').style.display = f && frame !== arabicFrame ? 'none' : 'block';
+    $('frameCaption').textContent = f ? f.caption : ($('translation').value || 'Masukkan bahan ayat untuk memulai.');
+}
+
+function nextFrame() {
+    if (!frames.length) {
+        alert('Susun skenario terlebih dahulu.');
+        return;
+    }
+    frame = (frame + 1) % frames.length;
+    showFrame();
+}
+
+function prevFrame() {
+    if (!frames.length) return;
+    frame = (frame + frames.length - 1) % frames.length;
+    showFrame();
+}
+
+function togglePlay() {
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+        $('playButton').textContent = 'Putar Storyboard';
+        return;
+    }
+    if (!frames.length) {
+        alert('Susun skenario terlebih dahulu.');
+        return;
+    }
+    timer = setInterval(nextFrame, 2500);
+    $('playButton').textContent = 'Hentikan Pratinjau';
+}
+
+$('rubricRows').innerHTML = weights.map(([name, w], i) => `<tr><td>${name}</td><td>${w}%</td><td><input id="score${i}" type="number" min="0" max="100" value="0" oninput="calculate()" aria-label="Skor ${name}"></td></tr>`).join('');
+
+function calculate() {
+    let sum = 0;
+    weights.forEach(([, w], i) => {
+        const el = $('score' + i);
+        let x = Number(el.value);
+        if (!Number.isFinite(x)) x = 0;
+        x = Math.max(0, Math.min(100, x));
+        sum += x * w / 100;
+    });
+    $('total').textContent = sum.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    return sum;
+}
+
+function data() {
+    const d = {};
+    ids.forEach(k => d[k] = $(k).value);
+    d.verified = $('verified').checked;
+    d.frames = frames;
+    d.scores = weights.map((_, i) => $('score' + i).value);
+    return d;
+}
+
+function saveDraft() {
+    try {
+        localStorage.setItem('hcca-master-v1', JSON.stringify(data()));
+        $('saveStatus').textContent = 'Draf tersimpan pada browser/perangkat ini.';
+    } catch (e) {
+        $('saveStatus').textContent = 'Penyimpanan browser tidak tersedia. Unduh laporan sebagai cadangan.';
+    }
+}
+
+function restoreDraft() {
+    try {
+        const d = JSON.parse(localStorage.getItem('hcca-master-v1') || 'null');
+        if (!d) {
+            alert('Belum ada draf tersimpan.');
+            return;
+        }
+        ids.forEach(k => $(k).value = d[k] || '');
+        $('verified').checked = !!d.verified;
+        frames = Array.isArray(d.frames) ? d.frames : [];
+        (d.scores || []).forEach((v, i) => {
+            if ($('score' + i)) $('score' + i).value = v;
+        });
+        renderScenes();
+        frame = 0;
+        showFrame();
+        calculate();
+        $('saveStatus').textContent = 'Draf berhasil dimuat.';
+        if (frames.length) setScenariosOpen(true);
+        autoGrowAll();
+    } catch (e) {
+        alert('Draf tidak dapat dibaca.');
+    }
+}
+
+function reportText() {
+    const d = data();
+    return `QUR’AN CONTENT CREATOR ACADEMY — LAPORAN PRAKTIKUM (TAFSIR AYAT)\nNama: ${d.student || '-'}\nTema: ${d.topic || '-'}\n\nTEKS ARAB\n${d.arabic}\n\nTERJEMAHAN\n${d.translation}\n\nRUJUKAN\n${d.source}\n\nPESAN\n${d.message}\n\nVERIFIKASI AKADEMIK\nIdentifikasi ayat: ${d.takhrij || '-'}\nKajian tafsir: ${d.sanad || '-'}\nPemeriksaan redaksi: ${d.matan || '-'}\nKonteks: ${d.context || '-'}\nSumber diperiksa: ${d.url || '-'}\nPernyataan verifikasi: ${d.verified ? 'DICENTANG oleh mahasiswa' : 'BELUM DICENTANG'}\n\nSTORYBOARD\n${frames.map((f, i) => `Adegan ${i + 1} (${i * 10}-${(i + 1) * 10} detik): ${f.title}\nTeks layar: ${f.caption}\nNarasi: ${f.narration}`).join('\n\n') || 'Belum dibuat'}\n\nRUBRIK\n${weights.map(([n, w], i) => `${n} (${w}%): ${d.scores[i] || 0}/100`).join('\n')}\nNILAI AKHIR: ${calculate().toFixed(1)}/100\nCatatan: ${d.feedback || '-'}\n\nCatatan: Interpretasi ayat, rujukan tafsir, dan penilaian memerlukan pemeriksaan dosen.`;
+}
+
+function makeReport() {
+    $('report').innerHTML = '<pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.6 Arial,sans-serif">' + escapeHTML(reportText()) + '</pre>';
+}
+
+function downloadReport() {
+    const blob = new Blob([reportText()], { type: 'text/plain;charset=utf-8' }), url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url;
+    a.download = 'Laporan_Praktikum_Quran.txt';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+showFrame();
+calculate();
+setScenariosOpen(false);
+autoGrowAll();
+</script>
+</body>
+</html>
